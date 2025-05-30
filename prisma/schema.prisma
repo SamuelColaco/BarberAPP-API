@@ -1,0 +1,78 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  client
+  barber
+}
+
+enum AppointmentStatus {
+  completed
+  pending
+  cancelled
+}
+
+
+model User{
+  id String @id @default(uuid())
+
+  name String
+  email String @unique
+  passwordHash String
+  role UserRole @default(client)
+
+  services Service[] @relation("Barber")
+  appointmentBarber Appointment[] @relation("AppointmentAsBarber")
+  appointmentClient Appointment[] @relation("AppointmentAsClient")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Service{
+  id String @id @default(uuid())
+
+  barberId String
+  name String
+  price Decimal
+
+  Barber User @relation("Barber", fields: [barberId], references: [id])
+  Appointment Appointment[] @relation("ServiceAppointment")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("services")
+}
+
+model Appointment{
+  id String @id @default(uuid())
+
+  clientId String
+  barberId String
+  serviceId String
+
+  date DateTime
+  hour String
+  status AppointmentStatus @default(pending)
+
+  Client User @relation("AppointmentAsClient", fields: [clientId], references: [id])
+
+  Barber User @relation("AppointmentAsBarber", fields: [barberId], references: [id])
+
+  Service Service @relation("ServiceAppointment", fields: [serviceId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("appointments")
+}
