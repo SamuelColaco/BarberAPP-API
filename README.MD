@@ -95,9 +95,13 @@
     E coloque nele essas variáveis de ambiente
 
     DATABASE_URL="escreva a url do banco de dados aqui (postgresql://user:password@db:5432/refund)"
+
     AUTH_SECRET="Escreva seu secret aqui"
+
     SMTP_SERVICE="Escreva o serviço SMTP aqui"
-    SMTP_USER="Escreva o email de usuario do serviço",
+
+    SMTP_USER="Escreva o email de usuario do serviço"
+
     SMTP_PASS="Escreva a senha de app aqui"
 
 5. **Rode o Servidor**
