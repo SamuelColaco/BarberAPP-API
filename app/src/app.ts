@@ -6,10 +6,12 @@ import { userRoutes } from "./infra/http/routes/userRoutes"
 import { serviceRoutes } from "./infra/http/routes/serviceRoutes"
 import { appointmentRoutes } from "./infra/http/routes/appointmentRoutes"
 import { sessionRoutes } from "./infra/http/routes/sessionRoutes"
+import cors from "cors"
 
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
 app.use(userRoutes)
 app.use(serviceRoutes)
