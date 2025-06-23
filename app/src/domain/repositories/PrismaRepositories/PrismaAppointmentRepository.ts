@@ -1,9 +1,10 @@
+import { AppointmentResponseDTO } from "../../../dto/AppointmentResponse.dto";
 import { AppointmentMapper } from "../../../infra/mappers/AppointmentMapper";
 import { prisma } from "../../../prisma";
 import { Appointment } from "../../entities/Appointment";
-import { IAppointmentRepository } from "../AppointmentRepository";
+import { IAppointmentQueryRepository, IAppointmentRepository } from "../AppointmentRepository";
 
-export class IPrismaAppointmentRepository implements IAppointmentRepository{
+export class IPrismaAppointmentRepository implements IAppointmentRepository, IAppointmentQueryRepository{
    async findById(id: string): Promise<Appointment | null> {
         const appointmentExist = await prisma.appointment.findFirst({ where: { id }})
 
@@ -24,11 +25,16 @@ export class IPrismaAppointmentRepository implements IAppointmentRepository{
         return AppointmentMapper.toDomain(appointmentExist)
     }
 
-    async findAll(): Promise<Appointment[]> {
+    async findAll(): Promise<AppointmentResponseDTO[]> {
         
-        const appointmentExist = await prisma.appointment.findMany()
+        const appointmentExist = await prisma.appointment.findMany({
+            include:{
+                Barber: true,
+                Service: true
+            }
+        })
 
-        return AppointmentMapper.toDomainManyAppointment(appointmentExist)
+        return AppointmentMapper.toManyResponseDTO(appointmentExist)
     }
 
     async delete({ id }: Appointment): Promise<void> {

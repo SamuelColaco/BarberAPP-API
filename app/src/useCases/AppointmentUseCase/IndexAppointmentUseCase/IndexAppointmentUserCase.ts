@@ -1,9 +1,9 @@
-import { IAppointmentRepository } from "../../../domain/repositories/AppointmentRepository";
+import { IAppointmentQueryRepository } from "../../../domain/repositories/AppointmentRepository";
 
 export class IndexAppointmentUseCase{
 
     constructor(
-        private appointmentRepository: IAppointmentRepository
+        private appointmentRepository: IAppointmentQueryRepository
     ){}
 
     async execute(){
