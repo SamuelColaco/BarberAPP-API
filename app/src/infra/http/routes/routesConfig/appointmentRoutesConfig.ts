@@ -4,11 +4,13 @@ import { IPrismaUserRepository } from "../../../../domain/repositories/PrismaRep
 import { CreateAppointmentUseCase } from "../../../../useCases/AppointmentUseCase/CreateAppointmentUseCase/CreateAppointmentUseCase";
 import { DeleteAppointmentUseCase } from "../../../../useCases/AppointmentUseCase/DeleteAppointmentUseCase/DeleteAppointmentUseCase";
 import { IndexAppointmentUseCase } from "../../../../useCases/AppointmentUseCase/IndexAppointmentUseCase/IndexAppointmentUserCase";
+import { IndexYourAppointmentUseCase } from "../../../../useCases/AppointmentUseCase/IndexYourAppointmentUseCase/IndexYourAppointmentUseCase";
 import { UpdateAppointmentUseCase } from "../../../../useCases/AppointmentUseCase/UpdateAppointmentUseCase/UpdateAppointmentUseCase";
 import { CreateNotificationByEmail } from "../../../providers/mail/CreateNotificationByEmail";
 import { CreateAppointmentController } from "../../controllers/AppointmentController/CreateAppointmentController";
 import { DeleteAppointmentController } from "../../controllers/AppointmentController/DeleteAppointmentController";
 import { IndexAppointmentController } from "../../controllers/AppointmentController/IndexAppointmentController";
+import { IndexYourAppointmentController } from "../../controllers/AppointmentController/IndexYourAppointmentController";
 import { UpdateAppointmentController } from "../../controllers/AppointmentController/UpdateAppointmentController";
 
 const userRepository = new IPrismaUserRepository()
@@ -19,9 +21,11 @@ const createNotificationByEmail = new CreateNotificationByEmail()
 const createAppointmentUseCase = new CreateAppointmentUseCase(appointmentRepository, userRepository, serviceRepository, createNotificationByEmail)
 const updateAppointmentUseCase = new UpdateAppointmentUseCase(appointmentRepository)
 const indexAppointmentUseCase = new IndexAppointmentUseCase(appointmentRepository)
+const indexYourAppointmentUseCase = new IndexYourAppointmentUseCase(appointmentRepository, userRepository)
 const deleteAppointmentUseCase = new DeleteAppointmentUseCase(appointmentRepository)
 
 export const createAppointmentController = new CreateAppointmentController(createAppointmentUseCase)
 export const updateAppointmentController = new UpdateAppointmentController(updateAppointmentUseCase)
 export const indexAppointmentController = new IndexAppointmentController(indexAppointmentUseCase)
+export const indexYourAppointmentController = new IndexYourAppointmentController(indexYourAppointmentUseCase)
 export const deleteAppointmentController = new DeleteAppointmentController(deleteAppointmentUseCase)

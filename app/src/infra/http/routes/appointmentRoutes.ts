@@ -16,4 +16,6 @@ appointmentRoutes.put("/appointment/:id", ensureAutheticated(verifyJwtToken), ap
 
 appointmentRoutes.delete("/appointment/:id",ensureAutheticated(verifyJwtToken), verifyUserAuthorization(["barber"]), appointmentController.deleteAppointmentController.deleteAppointment.bind(appointmentController.deleteAppointmentController))
 
+appointmentRoutes.get("/appointment/:clientId", ensureAutheticated(verifyJwtToken), verifyUserAuthorization(["barber", "client"]), appointmentController.indexYourAppointmentController.indexById.bind(appointmentController.indexYourAppointmentController))
+
 export { appointmentRoutes }

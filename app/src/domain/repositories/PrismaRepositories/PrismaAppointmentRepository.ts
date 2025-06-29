@@ -37,6 +37,21 @@ export class IPrismaAppointmentRepository implements IAppointmentRepository, IAp
         return AppointmentMapper.toManyResponseDTO(appointmentExist)
     }
 
+    async findByUserId(clientId: string): Promise<AppointmentResponseDTO[]> {
+        const appointmentExist = await prisma.appointment.findMany({
+            where: {
+                clientId
+            },
+            
+            include: {
+                Barber: true,
+                Service: true
+            }
+        })
+
+        return AppointmentMapper.toManyResponseDTO(appointmentExist)
+    }
+
     async delete({ id }: Appointment): Promise<void> {
         await prisma.appointment.delete({ where: { id }})
     }

@@ -11,4 +11,5 @@ export interface IAppointmentRepository{
 
 export interface IAppointmentQueryRepository{
     findAll(): Promise<AppointmentResponseDTO[]>
+    findByUserId(clientId: string): Promise<AppointmentResponseDTO[]>
 }
