@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch app/src/server.ts",
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles",
+    "build": "tsup app/src --out-dir app/build",
+    "start": "node app/build/server.js"
   },
   "keywords": [],
   "author": "",
@@ -32,6 +34,7 @@
     "prisma": "^6.8.2",
     "ts-jest": "^29.3.4",
     "ts-node": "^10.9.2",
+    "tsup": "^8.5.0",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   }
